@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Douglas Burns</origin>
+        <origin>Martyn Smith</origin>
+        <origin>Douglas Freehafer</origin>
+        <pubdate>20151204</pubdate>
+        <title>Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows</title>
+        <geoform>GIS coverages</geoform>
+        <pubinfo>
+          <pubplace>Troy, NY</pubplace>
+          <publish>U.S. Geological Survey</publish>
+        </pubinfo>
+        <onlink>https://dx.doi.org/10.5066/F7WS8R9S</onlink>
+        <lworkcit>
+          <citeinfo>
+            <origin>Richard Lumia</origin>
+            <title>Magnitude and Frequency of Floods in New York</title>
+            <geoform>Tables</geoform>
+            <onlink>https://pubs.usgs.gov/sir/2006/5112</onlink>
+          </citeinfo>
+        </lworkcit>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>A new Web-based application, titled Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows, has been developed that allows a user to apply a set of regression equations to estimate the magnitude of future floods for any stream or river in New York State (exclusive of Long Island) and the Lake Champlain Basin in Vermont. The regression equations that are the basis of the current application were developed in previous investigations by the U.S. Geological Survey (USGS) and are described at the USGS StreamStats Web sites for New York (https://water.usgs.gov/osw/streamstats/new_york.html) and Vermont (https://water.usgs.gov/osw/streamstats/Vermont.html). These regression equations include several fixed landscape metrics that quantify aspects of watershed geomorphology, basin size, and land cover as well as a climate variable-either annual precipitation or annual runoff. The application uses predictions of future annual precipitation from five climate models and two future greenhouse gas emissions scenarios, and provides results that are averaged over three future time periods, 2025-49, 2050-74, and 2075-99. Results are presented in ensemble form as the mean, median, maximum, and minimum values among the five climate models for each greenhouse gas emissions scenario and time period. These predictions of future annual precipitation are substituted into either the precipitation variable or a water balance equation for runoff to calculate potential future peak flows. This application is intended to be used only as an exploratory tool because: (1) the regression equations on which its based have not been adequately tested outside the range of the current climate, and (2) forecasting future precipitation with climate models, and downscaling these results to a fine spatial resolution, has high uncertainty. The reader is encouraged to read the full report for a discussion of the assumptions, uncertainties, and appropriate use of this exploratory application.</abstract>
+      <purpose>The datasets were collected and assembled to explore the role of future climate change on the magnitude of flood peaks for stream and rivers in New York and the Champlain Basin of Vermont.</purpose>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <rngdates>
+          <begdate>1865</begdate>
+          <enddate>1999</enddate>
+        </rngdates>
+      </timeinfo>
+      <current>ground condition</current>
+    </timeperd>
+    <status>
+      <progress>Complete</progress>
+      <update>Irregular</update>
+    </status>
+    <spdom>
+      <descgeog>Flood regressions are based on historic peakflow collected from the early 1865 through 1999 across New York and extending into adjacent states.</descgeog>
+      <bounding>
+        <westbc>-80.0</westbc>
+        <eastbc>-72.1</eastbc>
+        <northbc>45.4</northbc>
+        <southbc>40.6</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>USGS Thesaurus</themekt>
+        <themekey>climate change effects, streamflow, floods</themekey>
+      </theme>
+      <place>
+        <placekt>Geographic Names Information System</placekt>
+        <placekey>New York</placekey>
+      </place>
+      <temporal>
+        <tempkt>Oregon GEO Temporal Keywords</tempkt>
+        <tempkey>Modern</tempkey>
+      </temporal>
+    </keywords>
+    <accconst>none</accconst>
+    <useconst>none</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>Martyn Smith</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>425 Jordan Rd.</address>
+          <city>Troy</city>
+          <state>NY</state>
+          <postal>12180</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>518-285-5618</cntvoice>
+        <cntemail>marsmith@usgs.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>Support from the New York State Dept. of Transportation</datacred>
+    <tool>
+      <tooldesc>Downscaled climate model data obtained from NASA were averaged for 2025-49, 2050-74, and 2075-99 by the U.S. Geological Survey, Corvallis, OR.</tooldesc>
+      <toolacc>
+        <onlink>https://www.usgs.gov/climate_landuse/clu_rd/nccv.asp</onlink>
+        <toolinst>Go to web page</toolinst>
+      </toolacc>
+      <toolcont>
+        <cntinfo>
+          <cntperp>
+            <cntper>Jay Alder</cntper>
+            <cntorg>U.S. Geological Survey</cntorg>
+          </cntperp>
+          <cntaddr>
+            <addrtype>mailing and physical</addrtype>
+            <address>104 Wilkenson Hall, Oregon State University</address>
+            <city>Corvallis</city>
+            <state>OR</state>
+            <postal>97331</postal>
+            <country>USA</country>
+          </cntaddr>
+          <cntvoice>541-737-8928</cntvoice>
+          <cntemail>jalder@usgs.gov</cntemail>
+        </cntinfo>
+      </toolcont>
+      <toolcite>
+        <citeinfo>
+          <origin>https://www.usgs.gov/climate_landuse/clu_rd/nccv.asp</origin>
+          <pubdate>2015</pubdate>
+          <title>USGS Climate Change Viewer</title>
+        </citeinfo>
+      </toolcite>
+    </tool>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>No formal attribute accuracy tests were conducted</attraccr>
+    </attracc>
+    <logic>No formal logical accuracy tests were conducted</logic>
+    <complete>Dataset is considered complete for the information presented, as described in the abstract. Users are advised to read the rest of the metadata record carefully for additional details.</complete>
+    <posacc>
+      <horizpa>
+        <horizpar>No formal positional accuracy tests were conducted</horizpar>
+      </horizpa>
+      <vertacc>
+        <vertaccr>No formal positional accuracy tests were conducted</vertaccr>
+      </vertacc>
+    </posacc>
+    <lineage>
+      <method>
+        <methtype>n/a</methtype>
+      </method>
+    </lineage>
+  </dataqual>
+  <spdoinfo>
+    <direct>Raster</direct>
+  </spdoinfo>
+  <eainfo>
+    <overview>
+      <eaover>Predictions of flood magnitudes are provided in tabular form in cubic feet per second and as percent change from current flood magnitudes (from StreamStats). Data are presented as the mean, median, maximum, and minimum streamflow prediction from the five climate models for each future period and each greenhouse gas scenario.</eaover>
+      <eadetcit>https://dx.doi.org/10.5066/F7WS8R9S</eadetcit>
+    </overview>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntperp>
+          <cntper>Douglas Freehafer</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>425 Jordan Rd.</address>
+          <city>Troy</city>
+          <state>NY</state>
+          <postal>12180</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>518-285-5620</cntvoice>
+        <cntemail>dfreehaf@usgs.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <distliab>Application is consistent with current StreamStats flood regressions, but predictions may change in the future as new flood regressions become available and are implemented in StreamStats.</distliab>
+  </distinfo>
+  <metainfo>
+    <metd>20151211</metd>
+    <metc>
+      <cntinfo>
+        <cntperp>
+          <cntper>Douglas Burns</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>425 Jordan Rd.</address>
+          <city>Troy</city>
+          <state>NY</state>
+          <postal>12180</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>518-285-5662</cntvoice>
+        <cntemail>daburns@usgs.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001-1998</metstdv>
+  </metainfo>
+</metadata>
+

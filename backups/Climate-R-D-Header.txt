@@ -1,0 +1,55 @@
+	<link rel="stylesheet" type="text/css" href="assets/css/common.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap_custom.css">
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  </head>
+
+  <body>
+
+<!-- ATTEMPT 3-->
+
+<!-- BEGIN USGS Header Template -->
+<div id="usgscolorband">
+	<div id="usgsbanner">
+		<div id="usgsidentifier"><a href="http://www.usgs.gov/"><img src="/images/header_graphic_usgsIdentifier_white.jpg" alt="USGS - science for a changing world" title="U.S. Geological Survey Home Page" width="178" height="72" /></a></div>
+		<div id="usgsccsabox">
+			<div id="usgsccsa">
+			  <br /><a href="http://www.usgs.gov/">USGS Home</a>
+			  <br /><a href="http://answers.usgs.gov/cgi-bin/gsanswers?tmplt=2">Contact USGS</a>
+			  <br /><a href="http://search.usgs.gov/">Search USGS</a>
+              <br />
+			</div>
+		</div>
+		</div>
+	</div>
+<!-- END USGS Header Template -->
+  
+  <div id="usgstitle">
+  	<p><span id="fulltitle">Climate Research and Development Program</span><span id="shrttitle">Climate R&D Program</span></p>
+  </div>
+
+<div class="navbar" role="navigation">
+	<div>
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		    <span class="sr-only">Toggle navigation</span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+	    </button>
+	</div>
+	<div class="collapse navbar-collapse">
+	  <ul class="navbar-nav">
+		<li><a id="menu-home" href="default.asp">Home</a></li>
+        <li><a id="menu-sci" href="scitopics.asp">Science</a></li>
+        <li><a id="menu-prjs" href="projects.asp">Projects</a></li>
+        <li><a id="menu-prja" href="prjarch.asp">Project Archive</a></li>
+        <li><a id="menu-pubs" href="pubs.asp">Publications Search</a></li>
+		<li><a id="menu-about" href="aboutus.asp">About Us</a></li>
+      </ul>
+      <ul class="navbar-nav navbar-right">
+        <li><a id="menu-news" href="newsletter.asp">Newsletter</a></li>
+	  </ul>
+	</div><!-- end .collapse -->
+</div><!-- end .navbar -->
+</div>   

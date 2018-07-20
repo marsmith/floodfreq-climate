@@ -1,0 +1,18 @@
+Latitude,44.92267
+Longitude,-74.72433
+Flood Frequency Region,1
+Greenhouse gas scenario,rcp45_pr
+Time Period,2025 - 2049
+Climate Models,"BNU_ESM, CNRM_CM5, CESM1_BGC, IPSL_CM5A, NorESM1_M"
+
+Recurrance Interval (yrs),StreamStats Discharge (cfs),>Predicted Future Discharge (cfs) [Mean],Predicted Future Discharge (cfs) [Median],Predicted Future Discharge (cfs) [Max],Predicted Future Discharge (cfs) [Min],Predicted Future Discharge (% change) [Mean],Predicted Future Discharge (% change) [Median],Predicted Future Discharge (% change) [Max],Predicted Future Discharge (% change) [Min]
+1.25,1834,2432,2385,2718,2202,33,30,48,20
+1.5,2142,2780,2732,3082,2537,30,28,44,18
+2,2524,3206,3155,3524,2948,27,25,40,17
+5,3537,4329,4272,4692,4034,22,21,33,14
+10,4229,5103,5041,5500,4779,21,19,30,13
+25,5108,6095,6026,6540,5731,19,18,28,12
+50,5750,6823,6747,7305,6427,19,17,27,12
+100,6480,7661,7578,8191,7226,18,17,26,12
+200,7100,8368,8280,8936,7902,18,17,26,11
+500,8088,9504,9215,10138,8984,18,14,25,11

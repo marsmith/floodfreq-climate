@@ -1,0 +1,78 @@
+<!-- ORIGINAL stuff
+
+
+
+<!--
+  <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+        -->
+<!--div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+        <!-- BEGIN USGS Header Template -->
+<!--<a class="navbar-brand" href="http://www.usgs.gov"><img src="assets/img/usgs-logo.png"><span class='visible-tablet-mobile' style='font-size:12px;'></span></a>
+            
+        <div id="usgsccsabox" line-height="1.0" min-height="50px" height="50px">
+			<div id="usgsccsa" line-height="1.0">
+			  <br /><a href="http://www.usgs.gov/">USGS Home</a>
+			  <br /><a href="http://answers.usgs.gov/cgi-bin/gsanswers?tmplt=2">Contact USGS</a>
+			  <br /><a href="http://search.usgs.gov/">Search USGS</a>
+              <br />
+			</div>
+		</div>
+-->
+<div id="usgscolorband">
+	<div id="usgsbanner">
+		<div id="usgsidentifier"><a href="http://www.usgs.gov/"><img src="assets/img/header_graphic_usgsIdentifier_white.jpg" alt="USGS - science for a changing world" title="U.S. Geological Survey Home Page" width="178" height="72" /></a>
+        </div>
+			<div id="usgsccsabox">
+			<div id="usgsccsa">
+			  <br /><a href="http://www.usgs.gov/">USGS Home</a>
+			  <br /><a href="http://answers.usgs.gov/cgi-bin/gsanswers?tmplt=2">Contact USGS</a>
+			  <br /><a href="http://search.usgs.gov/">Search USGS</a>
+              <!--br /-->
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+  <div id="usgstitle">
+    <p><a href="/nwis">Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows (ver. 1.0)</a></p>
+  </div>
+<!-- END USGS Header Template -->
+        
+<!--        
+        
+        		    <a class="navbar-brand" href="http://www.usgs.gov"><img src="assets/img/usgs-logo.png"><span class='visible-tablet-mobile' style='font-size:12px;'>&nbsp;&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows (ver. 1.0)</span></a>
+-->
+<!--       </div>
+	</div>
+-->
+  <div class="navbar navbar-inverse " role="navigation">
+        <div class="navbar-header">
+			<button id="refreshButton" type="button" class="btn btn-info navbar-btn pull-right resetButton" ><i class="fa fa-refresh"></i></button>
+			
+			
+			<button id="howToButton" type="button" class="btn btn-info navbar-btn pull-right" onclick="$('#howToModal').modal('show'); return false;"><i class="fa fa-question-circle"></i><span class="hidden-xs">&nbsp;&nbsp;How To Use</span></button>
+			
+			<!-- Commenting out inclusion of report text, instead we add direct link to OFR at Pubs Warehouse
+			
+			<button id="aboutButton" type="button" class="btn btn-info navbar-btn pull-right" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-info-circle"></i><span class="hidden-xs">&nbsp;&nbsp;About</span></button>
+			
+			-->
+			
+			<!-- Here is a hyperlink that displays as a button and will open the link in a new window -->
+			
+			<a href="http://dx.doi.org/10.3133/ofr20151149" target="_blank" role="button" class="btn btn-info navbar-btn pull-right btn-large"><i class="fa fa-book"></i><span class="hidden-xs">&nbsp;&nbsp;OFR 2015-1149</span></a>
+			
+			
+			<button id="delineateButton" type="button" class="btn btn-success navbar-btn pull-right"><i class="fa fa-map-marker"></i><span class="hidden-xs">&nbsp;&nbsp;Delineate</span></button>
+			
+		    <a class="navbar-brand" href="http://www.usgs.gov"><span class='visible-tablet-mobile' style='font-size:12px;'>&nbsp;&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows (ver. 1.0)</span></a>
+
+<!--		    <a class="navbar-brand" href="http://www.usgs.gov"><img src="assets/img/usgs-logo.png"><span class='visible-tablet-mobile' style='font-size:12px;'>&nbsp;&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows (ver. 1.0)</span></a>
+-->
+       </div>
+	</div>
+
+
+-->

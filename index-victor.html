@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Future Flow Explorer v1.0</title>
+	
+	
+  <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  
+  
+  <link rel="stylesheet" href="assets/css/responsive-tables.min.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/responsive-tables.css" type="text/css">
+  
+  <!--<script src="//code.jquery.com/jquery-1.10.2.min.js"></script> -->
+  <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/common.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/custom.css">
+
+	<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script> 
+	
+	
+	
+	<script>
+	/*
+	$(document).ready(function() {
+		$.responsiveTables('768px');    
+	});    
+	*/
+	</script>
+	
+	<style type="text/css">
+	
+	@media only screen and (max-width:768px){
+    
+    body {
+        font-family: sans-serif;
+         font-size: .938em;
+    }
+    table {
+        width: 100%;
+        margin: 1em 0 2em;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        padding: .5em .5em;
+        font-weight: bold;
+        border-top: solid 3px #ccc;
+        border-bottom: solid 1px #ccc;
+    }
+
+    td {
+        padding: .5em .5em;
+        border-bottom: solid 1px #ccc;
+		height: 5em; /* dictates the height of the rows */
+    }
+	
+	}
+	@media only screen and (min-width: 769px) {
+	
+	.space th td {
+		padding-right: 10px;
+	}
+	}
+	
+
+	</style>
+  </head>
+
+  <body>
+
+<!-- 
+  <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+        -->
+<!--div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+        <!-- BEGIN USGS Header Template -->
+<!--<a class="navbar-brand" href="https://www.usgs.gov"><img src="assets/img/usgs-logo.png"><span class='visible-tablet-mobile' style='font-size:12px;'></span></a>
+            
+        <div id="usgsccsabox" line-height="1.0" min-height="50px" height="50px">
+			<div id="usgsccsa" line-height="1.0">
+			  <br /><a href="https://www.usgs.gov/">USGS Home</a>
+			  <br /><a href="https://answers.usgs.gov/cgi-bin/gsanswers?tmplt=2">Contact USGS</a>
+			  <br /><a href="https://search.usgs.gov/">Search USGS</a>
+              <br />
+			</div>
+		</div>
+-->
+<!--span class='visible-tablet-mobile'>
+<div id="usgscolorband">
+	<div id="usgsbanner">
+		<div id="usgsidentifier"><a href="https://www.usgs.gov/"><img src="assets/img/header_graphic_usgsIdentifier_white.jpg" alt="USGS - science for a changing world" title="U.S. Geological Survey Home Page" /></a></div>
+			<div id="usgsccsabox">
+			<div id="usgsccsa" line-height="1.0">
+			  <br /><a href="https://www.usgs.gov/">USGS Home</a>
+			  <br /><a href="https://answers.usgs.gov/cgi-bin/gsanswers?tmplt=2">Contact USGS</a>
+			  <br /><a href="https://search.usgs.gov/">Search USGS</a>
+              <br />
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+</span>
+-->
+<!-- END USGS Header Template -->
+        
+<!--        
+        
+        		    <a class="navbar-brand" href="https://www.usgs.gov"><img src="assets/img/usgs-logo.png"><span class='visible-tablet-mobile' style='font-size:12px;'>&nbsp;&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows (ver. 1.0)</span></a>
+-->
+<!-- 
+      </div>
+	</div>
+ -->
+ 
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+ 
+			<button id="refreshButton" type="button" class="btn btn-info navbar-btn pull-right resetButton" ><i class="fa fa-refresh"></i></button>
+			
+			<!-- Commenting out inclusion of report text, instead we add direct link to OFR at Pubs Warehouse
+			<button id="aboutButton" type="button" class="btn btn-info navbar-btn pull-right" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-book"><!--i class="fa fa-info-circle"-->
+			<!--</i><span class="hidden-xs">&nbsp;&nbsp;About</span></button>
+			-->
+			
+			<a href="https://pubs.usgs.gov/of/2015/1235/index.html" target="_blank" role="button" class="btn btn-info navbar-btn pull-right btn-large"><i class="fa fa-book"></i><span class="hidden-xs">&nbsp;&nbsp;OFR 2015-1235</span></a>
+			
+			<!-- TEST PURPOSES: Here is a hyperlink that displays as a button and will open the link in a new window 
+			<a href="https://dx.doi.org/10.3133/ofr20151149" target="_blank" role="button" class="btn btn-info navbar-btn pull-right btn-large"><i class="fa fa-book"></i><span class="hidden-xs">&nbsp;&nbsp;OFR 2015-1149</span></a>
+			-->
+			
+			<button id="howToButton" type="button" class="btn btn-info navbar-btn pull-right" onclick="$('#howToModal').modal('show'); return false;"><i class="fa fa-question-circle"></i><span class="hidden-xs">&nbsp;&nbsp;How To Use</span></button>
+			
+			<button id="delineateButton" type="button" class="btn btn-success navbar-btn pull-right"><i class="fa fa-map-marker"></i><span class="hidden-xs">&nbsp;&nbsp;Delineate</span></button>
+			
+<!--
+		    <a class="navbar-brand" href="https://www.usgs.gov"><span class='visible-tablet-mobile' style='font-size:12px;'>&nbsp;&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows</span></a>
+	-->		
+			<a class="navbar-brand" href="https://www.usgs.gov"><img src="assets/img/usgs-logo.png"><span class='visible-tablet-mobile' style='font-size:12px;'>&nbsp;&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows</span></a>
+
+		    <!--a class="navbar-brand" href="https://www.usgs.gov"><span class='hidden-md hidden-lg'><img src="assets/img/seal_usgs.jpg" align="absmiddle" style="height:36px;border-width:0px;"></span><span class='visible-tablet-mobile' style='font-size:12px;font-weight:bold;color:#084B8A'>&nbsp;&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows</span></a-->
+			
+		</div>
+	</div>
+	
+<!-- EXAMPLES
+	   <img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;">
+		<img src="assets/img/seal_usgs.jpg" style="width:80px;" style="border:3px solid #000000">
+		
+       </div>
+	</div>
+-->
+
+    <div id="map">
+		<div class="infoBox">
+			<div class="mapZoom"></div>
+			<div class="latlng"></div>
+		</div>
+	</div>
+	
+	
+				<!-- BEGIN USGS Footer Template -->
+<div id="usgsfooter">
+
+<div class="navbar navbar-inverse navbar-fixed-bottom visible-tablet-mobile" role="navigation">
+        <div class="navbar-header">
+        
+        <span class='visible-tablet-mobile'>
+        	<p id="usgsfooterbar">
+        <a href="https://www.usgs.gov/laws/accessibility.html" target="_blank" title="Accessibility Policy (Section 508)">Accessibility</a>
+		<a href="https://www.usgs.gov/foia/" target="_blank" title="Freedom of Information Act">FOIA</a>
+		<a href="https://www.usgs.gov/laws/privacy.html" target="_blank" title="Privacy policies of the U.S. Geological Survey.">Privacy</a>
+		<a href="https://www.usgs.gov/laws/policies_notices.html" target="_blank" title="Policies and notices that govern information posted on USGS Web sites.">Policies and Notices</a>
+	</p></span>
+    
+	<span class='visible-tablet-mobile'>
+	<p id="usgsfootertext">
+		<span class='visible-tablet-mobile'><a href="https://usa.gov/"><img src="assets/img/footer_graphic_usagov.jpg" alt="USA.gov logo" title="USAGov: Government Made Easy" width="90" height="26" /></a></span>
+        
+		<span class='visible-tablet-mobile' style='font-size:12px; color:white'><a href="https://www.doi.gov/" style='font-size:12px; color:white'>U.S. Department of the Interior</a> | <a href="https://www.usgs.gov/" style='font-size:12px; color:white'>U.S. Geological Survey</a><br /></span>
+	  
+      	<span class='visible-tablet-mobile' style='font-size:12px; color:white'>URL: <a href="https://dx.doi.org/10.5066/F7WS8R9S" title="https://dx.doi.org/10.5066/F7WS8R9S" style='font-size:12px; color:white'>https://dx.doi.org/10.5066/F7WS8R9S</a><br /></span>
+
+		<span class='visible-tablet-mobile' style='font-size:12px; color:white'>Page Contact Information: <a href="mailto:pdevries@usgs.gov" style='font-size:12px; color:white'>Website Manager</a><br /></span>
+
+		<span class='visible-tablet-mobile' style='font-size:12px; color:white'>Page Last Modified: Monday, December 28, 2015</span>
+	</p>
+    </span>
+</div>
+</div>
+</div>
+<!-- END USGS Footer Template -->
+
+	
+    <div id="aboutModal" class="modal fade"  tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Development of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows</h4>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="aboutTabs">
+              <li class="active"><a href="#about" data-toggle="tab"><i class="fa fa-book"></i>&nbsp;USGS OFR 2015-1235</a></li>
+            </ul>
+            <div class="tab-content" id="aboutTabsContent" style="padding-top: 10px;">
+              <div class="tab-pane fade active in" id="about">
+				
+				<h4>Prepared in cooperation with the New York State Department of Transportation</h4>
+			  
+				<h2>Development of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows</h2>
+				
+				<p>By Douglas A. Burns, Martyn J. Smith, and Douglas A. Freehafer<br>Open-File Report 2015-1235</p>
+				<p>U.S. Department of the Interior<br>U.S. Geological Survey</p>
+			  
+				<p>Suggested citation:<br>
+				Burns, D.A., Smith, M.J., and Freehafer, D.A., 2015, Development of flood regressions and climate change scenarios to explore estimates of future peak flows (version 1.0): U.S. Geological Survey Open-File Report 2015–1235, 1 p., <a href="https://dx.doi.org/10.3133/ofr20151235" target="_blank">https://dx.doi.org/10.3133/ofr20151235</a>.</p>
+				
+				
+				<h3>Conversion Factors</h3>
+
+				<div class="center-block" style="width:80%">
+					<p><strong>International System of Units to inch/pound</strong></p>
+
+					<table class="table table-condensed">
+					  <tr>
+						<th>Multiply</th><th>by</th><th>To obtain</th>
+					  </tr>
+
+						<tr><td>kilometer</td><td>0.6215</td><td>mile</td></tr>
+
+					  <tr>
+						<td colspan="3"><!-- class="info"-->An arc second is a unit of angular measurement equal to 1/3,600 of a degree. The length of an arc second on earth depends on the latitude. At a mid-latitude location such as New York State, 30 arc seconds are approximately equal to 800 meters.</td>
+					  </tr>
+
+					</table>
+				</div>
+			  
+				<h3>Abstract</h3>
+				<p>A new Web-based application, titled “Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows (version 1.0)”, has been developed by the U.S. Geological Survey, in cooperation with the New York State Department of Transportation, that allows a user to apply a set of regression equations to estimate the magnitude of future floods for any stream or river in New York State (exclusive of Long Island) and the Lake Champlain Basin in Vermont. The regression equations that are the basis of the current application were developed in previous investigations by the U.S. Geological Survey (USGS) and are described at the USGS StreamStats Web sites for <a href="https://water.usgs.gov/osw/streamstats/new_york.html" target="_blank">New York</a> and <a href="https://water.usgs.gov/osw/streamstats/Vermont.html" target="_blank">Vermont</a>. These regression equations include several fixed landscape metrics that quantify aspects of watershed geomorphology, basin size, and land cover as well as a climate variable-either annual precipitation or annual runoff. The application uses predictions of future annual precipitation from five climate models and two future greenhouse gas emissions scenarios, and provides results that are averaged over three future time periods, 2025-49, 2050-74, and 2075-99. Results are presented in ensemble form as the mean, median, maximum, and minimum values among the five climate models for each greenhouse gas emissions scenario and time period. These predictions of future annual precipitation are substituted into either the precipitation variable or a water balance equation for runoff to calculate potential future peak flows. This application is intended to be used only as an exploratory tool because: (1) the regression equations on which it’s based have not been adequately tested outside the range of the current climate, and (2) forecasting future precipitation with climate models, and downscaling these results to a fine spatial resolution, has high uncertainty. The reader is encouraged to read the rest of this report for a discussion of the assumptions, uncertainties, and appropriate use of this exploratory application.</p>
+
+				<h3>Purpose and Scope</h3>
+				<p>The purpose of the new Web-based application, titled “Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows (version 1.0)”, is to allow the user to apply regression equations that provide predictions of current peak flows in ungaged basins, and to provide estimates of the magnitudes of future peak flows for any stream or river in New York State (exclusive of Long Island) and the Lake Champlain Basin of Vermont (Burns and others, 2015). The Web-based application has been developed by the U.S. Geological Survey, in cooperation with the New York State Department of Transportation. This report describes how annual precipitation data from climate models are applied to the peak flow regression equations implemented in StreamStats to provide new estimates of peak flow magnitudes for three 21st-century time periods, 2025-49, 2050-74, and 2075-99. The assumptions that were used in this Web application are described as well as the sources of uncertainty in the future peak flow estimates. Finally, guidance about how to use the application, metadata, or to download the underlying geodatabase is provided from within the Web application.</p>
+
+				<h3>StreamStats Program</h3>
+				<p>The existing set of peak flow magnitude regression equations for current conditions were developed by the USGS (Lumia and others, 2006; Olson, 2014) and are implemented in a USGS Web-based stream analysis application titled, “The StreamStats Program”, that is available for streams and rivers in  <a href="https://water.usgs.gov/osw/streamstats/new_york.html" target="_blank">New York</a> and <a href="https://water.usgs.gov/osw/streamstats/Vermont.html" target="_blank">Vermont</a>. The StreamStats Program allows the user to delineate a watershed at any point on the stream channel within these two states, and to then obtain information about the stream and watershed. The available peak flow information for New York includes the instantaneous magnitudes of flows with recurrence intervals of 1.25, 1.5, 2, 5, 10, 25, 50, 100, 200, and 500 years (annual exceedance probabilities of 87.5, 75, 50, 20, 10, 4, 2, 1, 0.5, and 0.2 percent, respectively). The available peak flow information for Vermont includes the instantaneous magnitudes of flows with recurrence intervals of 2, 5, 10, 25, 50, 100, 200, and 500 years (annual exceedance probabilities of 50, 20, 10, 4, 2, 1, 0.5, and 0.2 percent, respectively). New York is divided into six regions for the purposes of this analysis, and separate regression equations were developed for each of these regions (Lumia and others, 2006). A single set of peak flow regression equations was developed for Vermont (Olson, 2014).</p>
+
+				<h3>Climate Change Application</h3>
+				<p>In the current application described in this report, the original regression equations are applied with a new climate variable (either precipitation or runoff) substituted into a given equation. To evaluate how future climate might affect peak flow magnitudes, data are applied from five climate models that were part of the most recent global climate assessment (5th Phase of the Coupled Model Intercomparison Project (CMIP5); Taylor and others, 2012). These models were selected based on discussions with climate scientists as to which of the CMIP5 climate models best represent past trends in precipitation in the Lake Champlain basin based on an analysis described in Guilbert and others (2014). Precipitation data from these climate models were obtained from downscaled projections at a spatial resolution of 30 arc-seconds that are available from the National Aeronautics and Space Administration as described by Thrasher and others (2013). Precipitation data were evaluated for two future scenarios, termed Representative Concentration Pathways (RCP) in CMIP5, that provide estimates of the extent to which greenhouse-gas concentrations in the atmosphere are likely to change through the 21st-century. These scenarios, RCP 4.5 and RCP 8.5, were evaluated for each climate model in CMIP5 (Taylor and others, 2012). RCP is an abbreviation for Representative Concentration Pathways, referring to potential future emissions trajectories of greenhouse gases such as carbon dioxide and others. RCP 4.5 is considered a mid-range emissions scenario, and RCP 8.5 is a high emissions scenario. Finally, results were averaged for three future time periods, 2025-49, 2050-74, and 2075-99 following the approach used in the  <a href="https://www.usgs.gov/climate_landuse/clu_rd/nccv.asp" target="_blank">USGS Climate Change Viewer</a>. The downscaled precipitation data for each model and RCP scenario averaged over these 25-year time windows were obtained from the developers of the USGS Climate Change Viewer (Jay Alder, U.S. Geological Survey, written communication, 2015). The application calculates an ensemble of results based on all five climate models for any of the two greenhouse-gas scenarios and three time periods, and reports the results as summary statistics. These available results are meant to reflect a range of variation predicted from among the five models and two greenhouse-gas scenarios.  Information on the models, greenhouse gas scenarios, and time periods is shown in Table 1.</p>
+
+				<div class="center-block" style="width:80%">
+					<p><strong>Table 1 -- </strong>Table 1.	Names, abbreviations, and references that describe the climate models, greenhouse-gas scenarios, and time periods that are included in the Web-based tool that provides estimates of future peak-flow magnitudes.</p>
+
+					<table class="table table-condensed">
+					  <tr>
+						<th>Name/Description</th><th>Abbreviation</th><th>Reference</th>
+					  </tr>
+
+					  <tr>
+						<td colspan="3" class="info">Climate Models</td>
+					  </tr>
+
+						<tr><td>Beijing Normal University Earth System Model</td><td>BNU-ESM</td><td>Ji and others, 2014</td></tr>
+						<tr><td>Community Earth System Model with Biogeochemical Cycling Model, Version 1.0</td><td>CESM1-BGC</td><td>Lindsay and others, 2014</td></tr>
+						<tr><td>Centre National de Recherches Météorologique Climatological Model 5</td><td>CNRM-CM5</td><td>Voldoire and others, 2012</td></tr>
+						<tr><td>Institut Pierre Simon Laplace Climate Model 5A, Low-Resolution</td><td>IPSL-CM5A-LR</td><td>Dufresne and others, 2013</td></tr>
+						<tr><td>Norwegian Earth System Model, Intermediate Resolution</td><td>NorESM1-M</td><td>Bentsen and others, 2013</td></tr>
+
+
+					  <tr>
+						<td colspan="3" class="info">Greenhouse-Gas Scenarios</td>
+					  </tr>
+
+					  <tr><td>Representative Concentration Pathway 4.5</td><td>RCP 4.5</td><td>Thomson and others, 2011</td></tr>
+					  <tr><td>Representative Concentration Pathway 8.5</td><td>RCP 8.5</td><td>Riahi and others, 2011</td></tr>
+
+					  <tr>
+						<td colspan="3" class="info">Time Periods</td>
+					  </tr>
+
+					  <tr><td>Average of the years 2025-49</td><td>2025-49</td><td><a href="https://www.usgs.gov/climate_landuse/clu_rd/nccv.asp" target="_blank"><span>&nbsp;&nbsp;USGS Climate Change Viewer</span></a></td></tr>
+					  <tr><td>Average of the years 2050-74</td><td>2050-74</td><td><a href="https://www.usgs.gov/climate_landuse/clu_rd/nccv.asp" target="_blank"><span>&nbsp;&nbsp;USGS Climate Change Viewer</span></a></td></tr>
+					  <tr><td>Average of the years 2075-99</td><td>2075-99</td><td><a href="https://www.usgs.gov/climate_landuse/clu_rd/nccv.asp" target="_blank"><span>&nbsp;&nbsp;USGS Climate Change Viewer</span></a></td></tr>
+
+					</table>
+				</div>
+				
+				<h3>Assumptions</h3>
+				<p>The application of these peak flow regression equations involves a space-for-time substitution approach because the regression equations were originally derived to account for spatial variation in flood peaks across each hydrologic region of New York and across Vermont. Extending spatial analyses of hydrologic responses through space-for-time substitution holds promise as an alternative approach to rainfall – runoff modeling for improving understanding of how climate change is likely to affect future hydrology (Sivapalan and others, 2011; Liu and Schwartz, 2012; Gyawali and others, 2015). The logic of applying these regression equations to describe how streams and rivers may respond to future changes in the precipitation regime is grounded in how basin characteristics such as drainage area and slope affect the magnitudes of peak flows. Here, a physical basis is assumed for the manner in which the geomorphic and land cover independent variables in the regression equations affect peak flows. The user is cautioned, however, that these are statistical models based on association, and that the independent variables in the regression equations may represent a variety of physical factors that are actually driving the peak flow response of basins. For example, the precipitation or runoff variable may in part represent the effects of elevation, which co-varies with these two measures.</p>
+				
+				<p>According to this approach, the key variable that will govern the change in peak flows is the exponent of either precipitation or runoff in the regression equations. If this exponent is greater than one, then peak flows will increase by a relative amount that is greater than the relative increase in precipitation or runoff. The opposite will occur if the exponent is less than one. For example, if precipitation in Region 1 of New York increases by 10 percent in a future climate scenario, then the 50-year recurrence-interval peak flow will increase by 11.38 percent because the exponent of the precipitation variable for this region and flow is 1.131 (Table 1; Lumia and others, 2006).</p>
+
+				<p>Several additional simplifying assumptions were made in the development of this Web-based tool. A broad assumption is that the relation between annual precipitation or runoff and the magnitudes of peak flows will be the same in the future as these values were over the time periods for which the regression equations were developed. These relations were developed based on an analysis of all pertinent and available streamgage discharge data in New York through 1999 (Lumia and others, 2006) and in Vermont through 2011 (Olson, 2014). Discharge data from surrounding states and Canadian provinces were also used in developing these relations. Several analyses of historical climate data and projections of future climate based on model output have indicated that the magnitude and frequency of large precipitation events is increasing (Groisman and others, 2005; Hodgkins and Dudley, 2011) and likely to further increase in the future (Toreti and others, 2013; Jannssen and others, 2014). These and other analyses suggest that the relation between annual precipitation and runoff and the size and intensity of large precipitation events may change in the future (Silliman and others, 2013). The development of this Web-based application necessitated the use of the available regression equations, which consider only annual values of precipitation or runoff.</p>
+				
+				<p>Another important assumption made in the development of this Web-based application is applicable to the peak flow regression equations developed for hydrologic regions 2, 3, 4, and 6 in New York, which use annual runoff as the climatological variable. These annual runoff values are based on the hydrologic analysis of Randall (1996) for the period 1951-80. Annual runoff is the difference between annual precipitation and annual evapotranspiration (ET) in the absence of changes in water storage or major human alteration of the water cycle in a basin. Recent reports have indicated that ET is increasing in the Northern Hemisphere, and continued increases are likely during the 21st-century (Miralles and others, 2014), but some conflicting evidence has also shown that changes in ET are complex, of high spatial variability, and likely to be influenced by multi-decadal climate oscillations (Jung and others, 2010). In this Web-based application, the ET/precipitation ratio is held constant, and future changes in annual runoff are governed by changes in precipitation and resulting changes in ET. The effects of future changes in ET on the magnitude of peak flows are not well known at present, but are likely to be substantial based on analyses of the role of low soil moisture in moderating the hydrologic impact of past large precipitation events (Ivancic and Shaw, 2015).</p>
+				
+				<p>A final assumption is pertinent only to the regression equations for Region 3 in New York. In this region, the median maximum seasonal snow depth is one of the predictive variables in the regression (Lumia and others, 2006). Future snowfall and snowpack depth for Region 3, which includes the Catskill Mountains, is expected to decline during the 21st-century as the climate warms (Matonse and others, 2013). The effects of a decreasing snowpack on floods in this region are not well known, and were not considered in the development of this Web-based application.</p>
+
+				<h3>Limitations and Uncertainty</h3>
+				<p>This application has several sources of uncertainty, which in total are difficult to quantify and are discussed below. The recommendation is to use this tool in an exploratory manner and to consider the results along with other sources of information to decide how future climate change may affect peak flow magnitudes. This field of investigation is evolving rapidly, and new and better applications and approaches are likely to emerge in the future.</p>
+				
+				<h5>Check Basin in Current StreamStats before using Climate Change Application</h5>
+				<p>The peak flow regression equations implemented in StreamStats are not readily applicable to two types of watersheds: (1) those that are greatly affected by stream regulation such as reservoirs and (or) by withdrawals or additions for water supply or irrigation, and (2) those where urban land use exceeds 15 percent of basin area (Lumia and others, 2006). None of the basins in Vermont are considered urbanized (Olson, 2014). The user of this Web-based application is encouraged to first obtain a table of basin characteristics from StreamStats prior to considering how climate change may affect flood magnitudes. Note that the current application provides a percent urban land-area value for any delineated basin reported as “Percentage of land-use from NLCD 2011 classes 21-24.” Regression-based estimates of current peak flow magnitudes for any basin with substantial regulation or diversion, or urban land exceeding 15 percent of basin area, are considered to have unacceptably high uncertainty, indicating that estimates of future peak flow magnitudes in such basins will also have unacceptably high uncertainty. Methods for estimating peak flows in ungaged urban watersheds are described by Sauer and others (1983).</p>
+				
+				<p>Another reason to explore a delineated basin in StreamStats before applying this new Web-based application is that some basins have geomorphic or land-cover characteristics, including basin drainage area, that are outside of the linear range used to develop the peak flow regression equations in each New York region or in Vermont. StreamStats provides a warning when an out-of-range basin has been delineated, and estimated flood magnitudes from such basins are considered to be poorly defined and should be used with extreme caution (Lumia and others, 2006). Lastly, the current climate explorer Web application requires that delineation points lie within hydrologic regions defined by Lumia and others (2006). For this reason, the stream delineation point (also termed pourpoint) cannot be in Pennsylvania, Canada, or offshore in the Great Lakes.</p>
+
+				<h5>Sources of Uncertainty</h5>
+				<p>There are several sources of uncertainty in the use of a regression-based approach to estimate peak flow magnitudes, especially when the role of future climate is being considered. The uncertainty of current peak flow magnitude estimates can be obtained by using the standard error of prediction of the regression equations for each region of New York as described by Lumia and others (2006) and for Vermont as described by Olson (2014). Other sources of uncertainty in current peak flow estimates arise from inaccuracies in the basin delineation and in the predictive variables.</p>
+				
+				<p>The application of regression equations derived from spatial analysis to climate change involves a space-for-time substitution. First, the regression equations indicate associations only and not physical processes, so changes in future hydrologic processes such as runoff may not be adequately represented in the current set of predictive variables in each regression equation. Second, the regression equations were developed for a 20th-century climate regime that may not adequately reflect the changes in temperature, precipitation, and snowfall patterns that are forecast for the 21st-century. These challenges to this statistical approach indicate a need to devise strategies for testing these regression equations in a climate-change context. At present this approach has not yet been adequately tested or validated.</p>
+				
+				<p>Considerable uncertainty also results from the assumptions and calculations embedded in each climate model and greenhouse-gas scenario. This source of uncertainty is difficult to evaluate; however, one approach has been to examine the “ensemble” of results available from various climate models and greenhouse-gas scenarios. This application has been designed to provide ensemble peak flow estimates reported as the mean, median, maximum, and minimum values for each selected combination of greenhouse gas scenario and future 21st-century time period for a given delineated basin. A final major source of uncertainty derives from the approach used for downscaling results from global climate models that have a spatial resolution of about 50 - 500 kilometers (Taylor and others, 2012) to the scale of 30 arc-seconds for the data used in this application. This source of uncertainty is potentially large, but difficult to quantify (Mearns and others, 2014). The approach used to derive the NEX DCP-30 downscaled dataset can be broadly described as a statistical approach, as described by Thrasher and others (2013) and National Aeronautics and Space Administration (2013).</p>
+
+				<h3>References Cited</h3>
+				<p>Bentsen, M., Bethke, I., Debernard, J.B., Iversen, T., Kirkevag, Seland, O., Drange, H., Roelandt, C., Seirstad, I.A., Hoose, C., and J.E. Kristjansson, 2013, The Norwegian Earth System Model, NorESM1-M – Part 1: Description and basic evaluation of the physical climate: Geoscientific Model Development, v. 6, p. 687-720.</p>
+				<p>Burns, D.A., Smith, M.J., and Freehafer, D.A., 2015, Application of flood regressions and climate change scenarios to explore estimates of future peak flows (version 1.0): U.S. Geological Survey data release, <a href="https://dx.doi.org/10.5066/F7WS8R9S" target="_blank">https://dx.doi.org/10.5066/F7WS8R9S</a>.</p>
+				<p>Dufresne, J.-L., M.-A. Foujols, M.-A., Denvil, S., Caubel, A., Marti, O., Aumont, O. Balkanski, Y., Bekki, S., Bellenger, H., Benshila, R., Bony, S., Bopp, L., Braconnot, P., Brockmann, P., Cadule, P., Cheruy, F., Codron, F., Cozic, A., Cugnet, D., de Noblet, D., Duvel, J.-P., Ethe´, C., Fairhead, L., Fichefet, T., Flavoni, S., Friedlingstein, P., Grandpeix, J.-Y., Guez, L., Guilyardi, E., Hauglustaine, D., Hourdin, F., Idelkadi, A., Ghattas, J., Joussaume, S., Kageyama, M., Krinner, G., Labetoulle, S., Lahellec, A., Lefebvre, M.-P., Lefevre, F., Levy, C., Li, Z.X., Lloyd, J., Lott, F., Madec, G., Mancip, M., Marchand, M., Masson, S., Meurdesoif, Y., Mignot, J., Musat, I., Parouty, S., Polcher, J., Rio, C., Schulz, M., Swingedouw, D., Szopa, S., Talandier, C., Terray, P., Viovy, N., and N. Vuichard, 2013, Climate change projections using the IPSL-CM5 Earth System Model: From CMIP3 to CMIP5: Climate Dynamics, v. 40, p. 2123-2165.</p>
+				<p>Groisman, P.Y., Knight, R.V., Easterling, D.R., Karl, T.R., Hegerl, G.C., and Razuvaev, 2005, Trends in intense precipitation in the climate record: Journal of Climate, v. 18, p. 1326-1350.</p>
+				<p>Guilbert, J., Beckage, B., Winter, J.M., Horton, R.M., Perkins, T., and Bomblies, A., 2014, Impacts of projected climate change over the Lake Champlain basin in Vermont: Journal of Applied Meteorology and Climatology, v. 53, p. 1861-1875.</p>
+				<p>Gyawali, R., Griffis, V.W., Watkins, D.W., Fennessey, N.M., 2015, Regional regression models for hydro-climate change impact assessment, Hydrological Processes, v. 29, p. 1972-1985.</p>
+				<p>Hodgkins, G.A., and R.A. Dudley, 2011, Historical summer base flow and stormflow trends for New England rivers: Water Resources Research, v. 47, W07528, <a href="https://dx.doi.org/10.1029/2010WR009109" target="_blank">https://dx.doi.org/10.1029/2010WR009109</a>.</p>
+				<p>Ivancic, T.J., and S.B. Shaw, 2015, Examining why trends in very heavy precipitation should not be mistaken for trends in very high river discharge, Climatic Change, accessed 10/30/2015 at <a href="https://link.springer.com/article/10.1007%2Fs10584-015-1476-1" target="_blank">https://link.springer.com/article/10.1007%2Fs10584-015-1476-1</a>.</p>
+				<p>Jannssen, E., Wuebbles, D.J., Kunkel, K.E., Olsen, S.C., and Goodman, A., 2014, Observational- andmodel-based trends and projections of extreme precipitation over the contiguous United States, Earth’s Future, v. 2, p. 99-113.</p>
+				<p>Ji, D., Wang, L., Feng, J., Wu, Q., Cheng, H., Zhang, Q., Yang, J., Dong, W., Dai, Y., Gong, D., Zhang, R.-H., Wang, X., Liu, J., Moore, J. C., Chen, D., and Zhou, M., 2014, Description and basic evaluation of Beijing Normal University Earth System Model (BNU-ESM) version 1: Geoscientific Model Development, v. 7, p. 2039-2064, <a href="https://dx.doi.org/10.5194/gmd-7-2039-2014" target="_blank">https://dx.doi.org/10.5194/gmd-7-2039-2014</a>.</p>
+				<p>Jung, M., Reichstein, M., Ciais, P., Seneviratne, S.I., Sheffield, J., Goulden, M.L., Bonan, G., Cescatti, A., Chen, J., de Jeu, R., Dolman,A.J., Eugster, W., Gerten, D., Gianelle, D., Gobron, N., Heinke, J., Kimball, J., Law, B.E., Montagnani, L., Mu, Q., Mueller, B., Oleson, K., Papale, D.,   Richardson, A.D., Roupsard, O., Running, S., Tomelleri, E., Viovy, N., Weber, U., Williams, C., Wood, E., Zaehle, S., and K. Zhan, 2010, Recent decline in the global land evapotranspiration trend due to limited moisture supply: Nature, v. 467, p. 951-954.</p>
+				<p>Lindsay, K., Bonan, G., Doney, S., Hoffman, F., Lawrence, D., Long, M., Mahowald, N., Moore, J., Randerson, J., and Thornton, P., 2014, Preindustrial control and 20th century carbon cycle experiments with the Earth System Model CESM1 (BGC): Journal of Climate, v. 27, p. 8981-9005.</p>
+				<p>Liu, G., and F.W. Schwartz, 2012, Climate-driven variability in lake and wetland distribution across the Prairie Pothole region: From modern observations to long-term reconstructions with space-for-time substitution, Water Resources Research, v. 48, W08526, accessed 9/15/2015 at <a href="https://onlinelibrary.wiley.com/doi/10.1029/2011WR011539/pdf" target="_blank">https://onlinelibrary.wiley.com/doi/10.1029/2011WR011539/pdf</a>.</p>
+				<p>Lumia, R., Freehafer, D.A., and Smith, M.J., 2006, Magnitude and Frequency of Floods in New York: U.S. Geological Survey Scientific Investigation Reports 2006-5112, 152 p., online at <a href="https://pubs.er.usgs.gov/publication/sir20065112" target="_blank">https://pubs.er.usgs.gov/publication/sir20065112</a>.</p>
+				<p>Matonse, A.H., Pierson, D.C., Frei, A., Zion, M.A., Anandhi, A., Schneiderman, E., and B. Wright, 2013, Investigating the impact of climate change on New York City’s primary water supply: Climatic Change, v. 116, p. 437-456.</p>
+				<p>Mearns, L.O., Bukovsky, M.S., Pryor, S.C., and Magana, V., 2014, Downscaling of climate information, in: Climate Change in North America: Regional Climate Studies, Ohring, G. (Ed.), Springer, p. 201-250.</p>
+				<p>Miralles, D.G., van den Berg, M.J., Gash, J.H., Parinussa, R.M., de Jeu, R.A.M., Beck, H.E., Holmes, T.R.H., Jiménez, C., Verhoest, N.E.C., Dorigo, W.A., Teuling, A.J., and A.J. Dolman, 2014, El Niño–La Niña cycle and recent trends in continental evaporation: Nature Climate Change, v. 4, p. 122-126.</p>
+				<p>National Aeronautics and Space Administration, 2013, NEX–DCP30—Downscaled 30 arc-second CMIP5 climate projections for studies of climate change impacts in the United States: National Aeronautics and Space Administration tech note, April 26, 10 p., accessed November 19, 2015, at <a href=" https://cds.nccs.nasa.gov/wp-content/uploads/201: 4/04/NEX-DCP30_Tech_Note_v0.pdf" target="_blank">https://cds.nccs.nasa.gov/wp-content/uploads/201: 4/04/NEX-DCP30_Tech_Note_v0.pdf</a>.</p>
+				<p>Olson, S.A., 2014, Estimation of flood discharges at selected annual exceedance probabilities for unregulated, rural streams in Vermont: U.S. Geological Survey Scientific Investigation Reports 2014-5078, 27 p., online at <a href="https://pubs.er.usgs.gov/publication/sir20145078" target="_blank">https://pubs.er.usgs.gov/publication/sir20145078</a>.</p>
+				<p>Randall, A.D., 1996, Mean annual runoff, precipitation, and evapotranspiration in the glaciated northeastern United States, 1951–80: U.S. Geological Survey Open-File Report 96-395, 2 pls., online at <a href"https://ny.water.usgs.gov/pubs/of/of96395/" target="_blank">https://ny.water.usgs.gov/pubs/of/of96395/</a>.</p>
+				<p>Riahi, K., Rao, S., Krey, V., Cho, C., Chirkov, V., Fischer, G., Kindermann, G., Nakicenovic, N., and Rfaj, P., 2011, RCP 8.5—A scenario of comparatively high greenhouse gas emissions: Climatic Change, v. 109, p. 33-57.</p>
+				<p>Sauer, V.B., Thomas, W.O., Jr., Stricker, V.A., and Wilson, K.V., 1983, Flood characteristics of urban watersheds in the United States: U.S. Geological Survey Water-Supply Paper 2207, 63 p., online at <a href="https://pubs.er.usgs.gov/publication/wsp2207" target="_blank">https://pubs.er.usgs.gov/publication/wsp2207</a>.</p>
+				<p>Silliman, J., Kharin, V.V., Zwiers, F.W., Zhang, X.,, and Bronaugh, D., 2013, Climate extremes indices in the CMIP5 multimodel ensemble: Part 2. Future climate projections, Journal of Geophysical Research: Atmospheres, v. 118, p. 2473–2493.</p>
+				<p>Sivapalan, M., M.A. Yaeger, C.J. Harman, X. Xu, and P.A. Troch, 2011, Functional model of water balance variability at the catchment scale: 1. Evidence of hydrologic similiarity and space-time symmetry, Water Resources Research, v. 47, W02522, accessed 8/12/2015 at <a href="https://onlinelibrary.wiley.com/doi/10.1029/2010WR009568/abstract" target="_blank">https://onlinelibrary.wiley.com/doi/10.1029/2010WR009568/abstract</a>.</p>
+				<p>Taylor K.E., Stouffer R.J., and Meehl G.A., 2012, An overview of CMIP5 and the experiment design: Bulletin of the American Meteorological Society v. 93, p. 485–498.</p>
+				<p>Thomson, A.L., Calvin, K.V., Smith, S.J., Kyle, G.P., Volke, A., Patel, P., Delgado-Arias, S., Bond-Lamberty, B., Wise, M.A., Clarke, L.E., and J.A. Edmonds, 2011, RCP4.5: A pathway for stabilization of radiative forcing by 2100: Climatic Change, v. 109, p. 77-94.</p>
+				<p>Thrasher, B., Xiong, J., Wang, W., Melton, F., Michaelis, A., and Nemani, R., 2013, Downscaled climate projections suitable for resource management, Eos, v. 94, p. 321-323.</p>
+				<p>Toreti, A., Naveau, P., Zampieri, M., Schindler, A., Scoccimarro, E., Xoplaki, E., Dijkstra, A., Gualdi, S., and Luterbacher, J., 2013, Projections of global changes in precipitation extremes from Coupled Model Intercomparison Project Phase 5 models: Geophysical Research Letters, v. 40, p. 4887-4892.</p>
+				<p>Voldoire, A., Sanchez-Gomez, E., Salas y Me´lia, D., Decharme, B., Cassou, C., Se´ne´si, S., Valcke, S., Beau, I., Alias, A., Chevallier, M., De´que´, M., Deshayes, J., Douville, H., Fernandez, E., Madec, G., Maisonnave, E., Moine, M.-P., Planton, S., Saint-Martin, D., Szopa, S., Tyteca, S., Alkama, R., Belamari, S., Braun, A., Coquart, L., and F. Chauvin, 2012, The CNRM-CM5.1 global climate model: description and basic evaluation: Climate Dynamics, v. 40, p. 2091-2121.</p>
+
+              </div>
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+	<div id="howToModal" class="modal fade"  tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title"><img style='display:inline-block;' src="assets/img/usgs_logo_small.png"/>&nbsp;&nbsp;Application of Flood Regressions and Climate Change Scenarios to Explore Estimates of Future Peak Flows</h4>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="aboutTabs">
+              <li class="active"><a href="#howtouse" data-toggle="tab"><i class="fa fa-question-circle"></i>&nbsp;How to Use</a></li>
+			  <li><a href="#metadata" data-toggle="tab"><i class="fa fa-info-circle"></i>&nbsp;Metadata</a></li>
+			  <li><a href="#examples" data-toggle="tab"><i class="fa fa-book"></i>&nbsp;Examples</a></li>
+			  <!--li><a href="#geodatabase" data-toggle="tab"><i class="fa fa-book"></i>&nbsp;Geodatabase</a></li-->
+			  <li><a href="#contact" data-toggle="tab"><i class="fa fa-phone"></i>&nbsp;Contact</a></li>
+			  <li><a href="#disclaimer" data-toggle="tab"><i class="fa fa-exclamation-circle"></i>&nbsp;Disclaimers and notices</a></li>
+            </ul>
+			<!-- Tab panes -->
+            <!--div class="tab-content" id="aboutTabsContent" style="padding-top: 10px;">
+              <div id="howtouse" class="tab-pane fade active in"-->
+            <div class="tab-content">
+              <div class="tab-pane active" id="howtouse">
+				<h3>How To Use the Web-Based Application</h3></br>
+
+				<h4>Before Using the Climate Change Application</h4>
+				
+				<p>Before using this application, the user is advised to first read the report by <a href="https://dx.doi.org/10.3133/ofr20151235" target="_blank">Burns and others (2015)</a>, which describes the assumptions used to develop the application as well as the sources of uncertainty in the future peak flow estimates.  The report is available at <a href="https://dx.doi.org/10.3133/ofr20151235" target="_blank">https://dx.doi.org/10.3133/ofr20151235</a>. The Web application is intended to be used as an exploratory tool in combination with other sources of information.</p>
+				
+				<p>The user is advised to first delineate the basin in the StreamStats Program for <a href="https://water.usgs.gov/osw/streamstats/new_york.html" target="_blank">New York</a> or <a href="https://water.usgs.gov/osw/streamstats/Vermont.html" target="_blank">Vermont</a>. To proceed with use of this climate change Web application, the basin must not: (1) exceed 15 percent urban land area, (2) show a high level of alteration by impoundment or withdrawal, or (3) have characteristics outside the range of those used to develop the regional flood-regression equations. If the basin is acceptable for evaluation in StreamStats with current peak-flow regression equations, then proceed to the climate change Web-based application.</p>
+				
+				<p>The user is warned that this application will not work for delineation points outside of the six New York hydrologic regions. The boundaries for these six hydrologic regions are described in <a href="https://pubs.usgs.gov/sir/2006/5112/SIR2006-5112.pdf" target="_blank">Lumia and others (2006)</a> and are shown as dashed black lines on the map in this application. This warning applies to the dark blue stream channel grids near the shores of Lake Erie, Niagara River, Lake Ontario, and the St. Lawrence River. Delineation points must be on the inland side of the dashed black hydrologic region boundary line. For example, 16 blue stream cells at the mouth of the Genesee River at Lake Ontario will fail to complete, as will delineation points in Pennsylvania, Canada, or points in Lake Champlain. The areas that will fail to complete are shown as a black cross-hatched pattern on the map in the application. The application will produce an error message that displays “There was an error calculating SS based flows” under the “Flows” tab and “Part 4” in the progress bar will not complete. In addition, the Web application does not perform area weighting across multiple hydrologic regions in New York; calculations for rivers that cross region boundaries are done with basin characteristics and equations for only the pourpoint region extended to the entire drainage basin.</p>
+
+				<h4>Using the Current Climate Change Application</h4>
+				
+				<p>Note that a blue button marked “Start Over” is available in the lower right-hand corner of each screen encountered during use of this application. Selecting this button will terminate current progress and reset the application to the map of New York and Vermont where a new basin delineation may begin.</p>
+				
+				<ol>
+				<li><em>Zoom to stream location</em> -- The computer mouse can be used to navigate around the map of New York and Vermont that appears when the tool is first implemented. Drag the basin to be delineated to the center of the screen before beginning to zoom. The basin can be periodically recentered during the zooming process. To delineate a stream basin, the zoom level must be at 15 or greater; the default zoom level is 7. Use the “+” button in the upper left-hand corner of the screen to increase the zoom level. Once the zoom level has reached at least 15, the dark blue grids representing stream channels will become visible.</li>
+				
+				<li><em>Delineate the basin</em> -- Click on the green button in the upper right-hand corner of the screen marked “Delineate” to activate the delineation function. Navigate to the appropriate stream location, center the mouse pointer over the dark blue stream grid desired, and click to delineate a basin. The selected delineation point on a stream is termed the “pourpoint.” Wait for the basin delineation and the calculate basin characteristics functions to be completed. If the basin fails to delineate properly, a button marked “Try Again” will appear that allows another attempt. Multiple attempts are sometimes required before delineation is successful. If the calculate basin characteristics fails, the button marked “Try Again” will appear that allows another attempt.</li>
+				
+				<li><em>Viewing output</em> -- Click on the “Output” tab to see the values of the peak-flow regression equation parameters and other pertinent information.</li>
+				
+				<li><em>Choose climate change scenario</em> -- Select a greenhouse-gas scenario and time period of interest from the drop-down menus.</li>
+				
+				<li><em>Estimate future peak flows</em> -- Click on the green button marked “Calculate Ensemble Statistics” at the bottom left-hand corner to calculate peak-flow values. Values for precipitation and runoff for each of the five climate models should appear in the “Model Parameter” table. If results for all five models are not shown, click again on the “Calculate Ensemble Statistics” button until successful.</li>
+				
+				<li><em>Examine ensemble output from downscaled climate models</em> -- Upon completion of the new peak-flow calculations, a table of output can be viewed by clicking the “Flows” tab. This table includes the original StreamStats discharge and the mean, median, maximum, and minimum discharge values from the five climate models. The table also includes the percentage change in peak-flow magnitudes from the current StreamStats values. All values in the output table are rounded to the nearest whole number.</li>
+				
+				<li><em>Obtaining output data</em> -- In the bottom left-hand corner of the screen where the output table appears, the button marked “Export to CSV” can be clicked to download a comma-delimited text file of the output-table data. This file can be exported to a spreadsheet or database file format.</li>
+				
+				<li><em>Viewing and downloading the delineated basin</em> -- The tab marked “Map” can be clicked to view a map of the delineated basin. The button in the lower left-hand corner of this screen marked “Export Basin” can be clicked to download a ZIP file of the shape file of the delineated basin that can be imported into geographic information system software.</li>
+				
+				<li><em>Selecting a new climate change scenario</em> -- To change the greenhouse-gas scenario or time period for a given basin delineation, click the “Output” tab, enter the new choices from the dropdown menus, and then click the “Calculate Ensemble Statistics” button and the “Flows” tab to see the revised output table.</li>
+				
+				<li><em>Delineating a new basin</em> -- When all calculations for a given basin are completed, click the blue “Start Over” button in the bottom right-hand corner to delineate a new basin. This button is available from any of the tabs.</li>
+				</ol>
+              </div>
+           <!--div class="tab-content" id="aboutTabsContent" style="padding-top: 10px;">
+              <div id="metadata" class="tab-pane fade in"-->
+			  <div class="tab-pane" id="metadata">
+							</br>
+							<!--p>For inquiries about the website, please contact (click logo):</p-->
+							<table class="table">
+								<!-- tr>
+									<td colspan="3">
+										<h4>
+											Metadata File:
+										</h4>
+									</td>
+								</tr -->
+								
+								<!--tr>
+									<td colspan="3" height="20px" align="left">
+									
+									<a href="https://dx.doi.org/10.3133/ofr20151149" target="_blank" role="button" class="btn btn-info navbar-btn pull-right btn-large"><i class="fa fa-info-circle"></i><span class="hidden-xs">&nbsp;&nbsp;OF 2015-1149</span></a>
+									
+									</td>
+									
+								</tr-->
+								
+								<br />
+                <!--div class="navigacijaDesno" style="background-image: url(Images/menubg1.jpg);" 
+                    <br />
+                    &nbsp; &nbsp;<img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" />&nbsp;&nbsp;&nbsp;-->
+                    <a href="https://ny.water.usgs.gov/maps/floodfreq-climate/Application_of_Flood_Regressions_and_Climate_Change_Scenarios_to_Explore_Estimates_of_Future_Peak_Flows.xml" target="_blank" title="Metadata"> <img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" 
+					style="color:#014464;font-size:Medium;font-weight:bold;"> &nbsp; &nbsp; Metadata</a>&nbsp;
+					<span style="color: #6699cc">
+					<span style="color: #336699">
+                    </span>
+                    </span>
+                    <br />
+                    <br />
+					</table>
+              </div>
+			  
+              <!--div id="examples" class="tab-pane fade in"-->
+			  <div class="tab-pane" id="examples">
+							</br>
+							<table class="table">
+								<!-- tr>
+									<td colspan="3">
+										<h4>
+											Metadata File:
+										</h4>
+									</td>
+								</tr -->
+								
+								<!--tr>
+									<td colspan="3" height="20px" align="left">
+									
+									<a href="https://dx.doi.org/10.3133/ofr20151149" target="_blank" role="button" class="btn btn-info navbar-btn pull-right btn-large"><i class="fa fa-info-circle"></i><span class="hidden-xs">&nbsp;&nbsp;OF 2015-1149</span></a>
+									
+									</td>
+									
+								</tr-->
+								
+								<br />
+                <!--div class="navigacijaDesno" style="background-image: url(Images/menubg1.jpg);" 
+                    <br />
+                    &nbsp; &nbsp;<img src="assets/img/gdb.jpg" align="absmiddle" style="height:40px;border-width:0px;" />&nbsp;&nbsp;&nbsp;-->
+					Example 1. Mohawk River near Green Island, NY: 
+                    <a href="examples/climchgapp1.0.MohawkR_B_Delineated_Map.2016-01-02_22-29-08.png" target="_blank" title="Delineated Map"><!--img src="assets/img/gdb.jpg" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Delineated Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_A_Pourpoint_Map.2016-01-02_22-29-08.png" target="_blank" title="Pourpoint Map"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Pourpoint Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Progress-1.2016-01-02_22-29-08.png" target="_blank" title="Progress In Progress"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Progress In-Progress</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Progress-2.2016-01-02_22-29-08.png" target="_blank" title="Progress Try Again"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Progress Try-Again</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Progress-3.2016-01-02_22-29-08.png" target="_blank" title="Progress Success"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Progress Success</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Rcp4.5_Output2025-49.2016-01-02_22-29-08.png" target="_blank" title="Rcp 4.5, Climate Model Output 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Climate Model Output 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Rcp4.5_Flows2025-49.2016-01-02_22-29-08.png" target="_blank" title="Rcp 4.5, Flows 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Rcp4.5_Flows2025-49.data.csv" target="_blank" title="Rcp 4.5, Flows 2025-49 Export CSV"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5 Export CSV</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Rcp8.5_Output2025-49.2016-01-02_22-29-08.png" target="_blank" title="Rcp 8.5, Climate Model Output 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Climate Model Output 2025-49 Rcp 8.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.MohawkR_Rcp8.5_Flows2025-49.2016-01-02_22-29-08.png" target="_blank" title="Rcp 8.5, Flows 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 8.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.mohawk-river-nr-greenisland-ny.zip" target="_blank" title="Complete Zip File"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Complete Zip File</a>.&nbsp;
+					<br />
+					Example 2. Irondequoit Creek near Henrietta, NY:
+                    <a href="examples/climchgapp1.0.irondequoitcreek.c-delineated-map.2015-10-26_14-50-35.jpg" target="_blank" title="Delineated Map"><!--img src="assets/img/gdb.jpg" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Delineated Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.irondequoitcreek.a-pourpoint.2015-10-26_14-35-02.jpg" target="_blank" title="Pourpoint Map"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Pourpoint Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.irondequoitcreek.b-pourpoint-zoom.2015-10-26_14-35-02.jpg" target="_blank" title="Pourpoint Zoomed-in Map"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Pourpoint Zoomed-in Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.irondequoitcreek.f-output.post-ensemble.2015-10-26_14-49-01.jpg" target="_blank" title="Rcp 4.5, Climate Model Output 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Climate Model Output 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.irondequoitcreek.g-flows.2015-10-26_14-48-07.jpg" target="_blank" title="Rcp 4.5, Flows 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.irondequoitcreek.h-flows-exportfile.2015-10-26_14-48-07.data.csv" target="_blank" title="Rcp 4.5, Flows 2025-49 Export CSV"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5 Export CSV</a>,&nbsp;
+					<a href="examples/climchgapp1.0.irondequoit-creek-nr-henrietta-ny.zip" target="_blank" title="Complete Zip File"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Complete Zip File</a>.&nbsp;
+					<br />
+					Example 3. Deer River near Massena, NY:
+                    <a href="examples/climchgapp1.0.deerriver.c-delineated-map.2015-10-26_15-19-29.jpg" target="_blank" title="Delineated Map"><!--img src="assets/img/gdb.jpg" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Delineated Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.deerriver.a-pourpoint.2015-10-26_15-10-10.jpg" target="_blank" title="Pourpoint Map"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Pourpoint Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.deerriver.b-pourpoint-zoom.2015-10-26_15-13-29.jpg" target="_blank" title="Pourpoint Zoomed-in Map"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Pourpoint Zoomed-in Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.deerriver.f-output.post-ensemble.2015-10-26_15-18-31.jpg" target="_blank" title="Rcp 4.5, Climate Model Output 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Climate Model Output 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.deerriver.g-flows.2015-10-26_15-17-51.jpg" target="_blank" title="Rcp 4.5, Flows 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.deerriver.h-flows-exportfile.2015-10-26_15-17-51.data.csv" target="_blank" title="Rcp 4.5, Flows 2025-49 Export CSV"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5 Export CSV</a>,&nbsp;
+					<a href="examples/climchgapp1.0.deer-river-nr-massena-ny.zip" target="_blank" title="Complete Zip File"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Complete Zip File</a>.&nbsp;
+					<br />
+					Example 4. Vloman Kill near Glenmont, NY:
+                    <a href="examples/climchgapp1.0.vlomankill.c-delineated-map.2016-01-02_15-52-55.png" target="_blank" title="Delineated Map"><!--img src="assets/img/gdb.jpg" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Delineated Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.vlomankill.a-pourpoint.2016-01-02_15-52-55.jpg" target="_blank" title="Pourpoint Map"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Pourpoint Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.vlomankill.b-pourpoint-zoom.2016-01-02_15-52-55.jpg" target="_blank" title="Pourpoint Zoomed-in Map"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Pourpoint Zoomed-in Map</a>,&nbsp;
+					<a href="examples/climchgapp1.0.vlomankill.h-output-2.2016-01-02_15-52-55.png" target="_blank" title="Rcp 4.5, Climate Model Output 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Climate Model Output 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.vlomankill.i-flows.2016-01-02_15-52-55.png" target="_blank" title="Rcp 4.5, Flows 2025-49"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5</a>,&nbsp;
+					<a href="examples/climchgapp1.0.vlomankill.j-flows-exportfile.2016-01-02_15-52-55.data.csv" target="_blank" title="Rcp 4.5, Flows 2025-49 Export CSV"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Flows 2025-49 Rcp 4.5 Export CSV</a>,&nbsp;
+					<a href="examples/climchgapp1.0.vloman-kill-nr-glenmont-ny.zip" target="_blank" title="Complete Zip File"><!--img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" style="color:#014464;font-size:Medium;font-weight:bold;"-->Complete Zip File</a>.&nbsp;
+					<br />
+					<span style="color: #6699cc">
+					<span style="color: #336699">
+                    </span>
+                    </span>
+                    <br />
+                    <br />
+					</table>
+              </div>
+			  
+              <!--div id="geodatabase" class="tab-pane fade in"-->
+			  <div class="tab-pane" id="geodatabase">
+							</br>
+							<table class="table">
+								<!-- tr>
+									<td colspan="3">
+										<h4>
+											Metadata File:
+										</h4>
+									</td>
+								</tr -->
+								
+								<!--tr>
+									<td colspan="3" height="20px" align="left">
+									
+									<a href="https://dx.doi.org/10.3133/ofr20151149" target="_blank" role="button" class="btn btn-info navbar-btn pull-right btn-large"><i class="fa fa-info-circle"></i><span class="hidden-xs">&nbsp;&nbsp;OF 2015-1149</span></a>
+									
+									</td>
+									
+								</tr-->
+								
+								<br />
+                <!--div class="navigacijaDesno" style="background-image: url(Images/menubg1.jpg);" 
+                    <br />
+                    &nbsp; &nbsp;<img src="assets/img/gdb.jpg" align="absmiddle" style="height:40px;border-width:0px;" />&nbsp;&nbsp;&nbsp;-->
+					<a href="https://ny.water.usgs.gov/maps/floodfreq-climate/README.rcp45_85pr_CompletePRECIPin.pdf" target="_blank" title="Metadata"> <img src="assets/img/meta.png" align="absmiddle" style="height:40px;border-width:0px;" 
+					style="color:#014464;font-size:Medium;font-weight:bold;"> &nbsp; Metadata</a>&nbsp;&nbsp;
+                    <a href="https://ny.water.usgs.gov/maps/floodfreq-climate/Dataset.USGS-OFR-2015-1235.DOI-10.5066-F7WS8R9S.zip" target="_blank" title="Geodatabase"> <img src="assets/img/gdb.jpg" align="absmiddle" style="height:40px;border-width:0px;" 
+					style="color:#014464;font-size:Medium;font-weight:bold;"> &nbsp; ESRI Geodatabase</a> (23MB zip; To download, right-click, Save link as...)&nbsp;
+					<span style="color: #6699cc">
+					<span style="color: #336699">
+                    </span>
+                    </span>
+                    <br />
+                    <br />
+					</table>
+              </div>
+			  
+			  <div class="tab-pane" id="contact">
+				<!-- /br -->
+							<table class="table">
+								<!-- tr>
+									<td colspan="3">
+										<h4>
+											Contact Information:
+										</h4>
+									</td>
+								</tr -->
+								<!-- tr -->
+									<td align="right">
+										<a href="https://ny.water.usgs.gov/" target="_blank" title="U.S. Geological Survey"><img src="assets/img/seal_usgs.jpg" style="width:80px;" style="border:3px solid #000000"></a>
+									</td>
+									<td width="20px">
+									</td>
+									<td align="left">
+										<div>
+											<b>Doug Burns</b><br>
+										</div>
+										<div>
+											U.S. Geological Survey<br>
+											New York Water Science Center<br>
+											425 Jordan Road, Troy, NY 12180<br>
+											Email: <a href="https://daburns@usgs.gov" target=
+												"_blank">daburns@usgs.gov</a><br>
+											Phone: (518) 285-5662<br>
+										</div>
+									</td>
+								<!-- /tr -->
+							</table>
+				</div>
+				<div class="tab-pane" id="disclaimer">
+				</br>
+				<!-- BEGIN USGS Footer Template -->
+<div id="usgsfooter">
+	<p id="usgsfooterbar">
+		<a href="https://www.usgs.gov/laws/accessibility.html" target="_blank" title="Accessibility Policy (Section 508)">Accessibility</a>
+		<a href="https://www.usgs.gov/foia/" target="_blank" title="Freedom of Information Act">FOIA</a>
+		<a href="https://www.usgs.gov/laws/privacy.html" target="_blank" title="Privacy policies of the U.S. Geological Survey.">Privacy</a>
+		<a href="https://www.usgs.gov/laws/policies_notices.html" target="_blank" title="Policies and notices that govern information posted on USGS Web sites.">Policies and Notices</a>
+	</p>
+	
+	<p id="usgsfootertext">
+		<a href="https://usa.gov/"><img src="assets/img/footer_graphic_usagov.jpg" alt="USA.gov logo" title="USAGov: Government Made Easy" width="90" height="26" /></a>
+		<a href="https://www.doi.gov/">U.S. Department of the Interior</a> |
+		<a href="https://www.usgs.gov/">U.S. Geological Survey</a><br />
+	  
+	  URL: <a href="https://dx.doi.org/10.5066/F7WS8R9S" target="_blank" title="https://dx.doi.org/10.5066/F7WS8R9S">https://dx.doi.org/10.5066/F7WS8R9S</a><br /> 
+
+      Page Contact Information: <a href="mailto:pdevries@usgs.gov">Website Manager</a><br />
+
+      Page Last Modified: Monday, December 28, 2015  
+	</p>
+</div>
+<!-- END USGS Footer Template -->
+				</div>
+
+			</div><!-- /.Tab panes -->
+          </div><!-- /.modal body -->
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+	<div id="delineateModal" class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+			<div class="modal-header">
+				<!--<button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+				<h4 class="modal-title text-primary" id="feature-title"><img style='display:inline-block;' src="assets/img/usgs_logo_small.png"/>&nbsp;&nbsp;Results&nbsp;&nbsp;doi:10.5066/F7WS8R9S(v1.0)</h4>
+			</div>
+			<div class="modal-body" id="feature-info">
+
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist" id="tabList">
+				  <li class="active"><a href="#progress" role="tab" data-toggle="tab">Progress</a></li>
+				  <li><a href="#output" role="tab" data-toggle="tab">Output</a></li>
+				  <li><a href="#flows" role="tab" data-toggle="tab">Flows</a></li>
+				  <li><a href="#maptab" role="tab" data-toggle="tab">Map</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div class="tab-pane active" id="progress">
+						</br>
+
+						<div class="alert alert-info" role="alert"><h4 style="color:#707070;"><strong>Part 1.</strong> Validate Clicked Point</h5>
+							<div id='pointProgress'>
+								<div class="loading-indicator">
+									<div id="pointProgressBarMain" class="progress">
+										<div id="pointProgressBarColor" class="progress-bar" style="width: 100%;">
+											<span id="pointProgressText">Not started</span>
+										</div>
+									</div>
+								</div>
+								<div>Time elapsed: <span id='regionTime'></span></div>
+							</div>
+						</div>
+
+						<div class="alert alert-info" role="alert"><h4 style="color:#707070;"><strong>Part 2.</strong> Delineate Basin</h4>
+							<div id='delineationProgress'>
+								<div class="loading-indicator">
+									<div id="delineationProgressBarMain" class="progress">
+										<div id="delineationProgressBarColor" class="progress-bar" style="width: 100%;">
+											<span id="delineationProgressText">Not started</span>
+										</div>
+									</div>
+								</div>
+								<div>Time elapsed: <span id='delineationTime'></span></div>
+							</div>
+							<div class="clearfix">
+								<button id="reDelineate" style="display:none" type="button" class="btn btn-sm btn-primary pull-right"><i class="fa fa-refresh"></i><span>&nbsp;&nbsp;Try Again</button>
+							</div>
+						</div>
+
+						<div class="alert alert-info" role="alert"><h4 style="color:#707070;"><strong>Part 3.</strong> Calculate Region Based Basin Characteristics</h4>
+							<div id='basinCharProgress'>
+								<div class="loading-indicator">
+									<div id="basinCharProgressBarMain" class="progress">
+										<div id="basinCharProgressBarColor" class="progress-bar" style="width: 100%;">
+											<span id="basinCharProgressText">Not started</span>
+										</div>
+									</div>
+								</div>
+								<div>Time elapsed: <span id='basinCharTime'></span></div>
+							</div>
+							<div class="clearfix">
+								<button id="recalcChars" style="display:none" type="button" class="btn btn-sm btn-primary pull-right"><i class="fa fa-refresh"></i><span>&nbsp;&nbsp;Try Again</button>
+							</div>
+						</div>
+
+						<div class="alert alert-info" role="alert"><h4 style="color:#707070;"><strong>Part 4.</strong> Calculate StreamStats Flow Estimates</h4>
+							<div id='streamStatsFlowsProgress'>
+								<div class="loading-indicator">
+									<div id="streamStatsFlowsProgressBarMain" class="progress">
+										<div id="streamStatsFlowsProgressBarColor" class="progress-bar" style="width: 100%;">
+											<span id="streamStatsFlowsProgressText">Not started</span>
+										</div>
+									</div>
+								</div>
+								<div>Time elapsed: <span id='streamStatsFlowsTime'></span></div>
+							</div>
+						</div>
+
+						<div>
+							<div class="btn-group">
+								<button id="editCharacteristics" style="display:none" type="button" class="btn btn-sm btn-success"><i class="fa fa-check-square"></i><span>&nbsp;&nbsp;Continue</span></button>
+							</div>
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-primary pull-right resetButton"><i class="fa fa-undo"></i><span>&nbsp;&nbsp;Start Over</button>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="tab-pane" id="output">
+
+						</br>
+						<!-- basin characteristics panel -->
+						<div class="panel panel-default">
+							<div class="panel-heading">Basin Characteristics</div>
+								<table class="table table-condensed">
+									<tr><th style="width:60%">StreamStats Parameter</th><th style="width:20%">Value</th><th style="width:20%">Units</th></tr>
+									<tbody id="SSBasinCharResults"></tbody>
+								</table>
+								<table class="table table-condensed">
+									<tr><th style="width:60%">Model Parameter</th><th style="width:20%">Value</th><th style="width:20%">Units</th></tr>
+									<tbody id="futurePrecipResults"></tbody>
+								</table>
+						</div>
+
+						<!-- climate data panel -->
+						<div class="panel panel-default">
+							<div class="panel-heading">Choose a climate scenario</div>
+							<div class="panel-body">
+								<p>After selecting your climate model from the dropdown menus, click the "Calculate Ensemble Statistics" button to compute flows</p>
+
+								<table class="table table-condensed">
+									<tbody>
+									<tr>
+										<td class='col-md-9'>Greenhouse gas scenario</td>
+										<td>
+											<div class="btn-group">
+												<button type="button" class="btn btn-sm btn-default dropdown-toggle climateButton" data-toggle="dropdown">
+													<span id='gasscenario' data-bind="label" value="rcp45_pr">RCP 4.5</span>&nbsp;<span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu" role="menu">
+													<li><a href="#" value="rcp45_pr">RCP 4.5</a></li>
+													<li><a href="#" value="rcp85_pr">RCP 8.5</a></li>
+												</ul>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class='col-md-9'>Time period</td>
+										<td>
+											<div class="btn-group">
+												<button type="button" class="btn btn-sm btn-default dropdown-toggle climateButton" data-toggle="dropdown">
+													<span id='timewindow' data-bind="label" value="25_49">2025-2049 mean</span>&nbsp;<span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu" role="menu">
+													<li><a href="#" value="25_49">2025 - 2049</a></li>
+													<li><a href="#" value="50_74">2050 - 2074</a></li>
+													<li><a href="#" value="75_99">2075 - 2099</a></li>
+												</ul>
+											</div>
+										</td>
+									</tr>
+
+									</tbody>
+								</table>
+
+								<div id="precipStatus"></div>
+
+								<button id="updatePrecip" style="display:none" type="button" class="btn btn-sm btn-success has-spinner"><span class='spinner'><i class="fa fa-refresh fa-spin"></i></span>Calculate Ensemble Statistics</button>
+
+							</div>
+						</div>
+
+						<div>
+							<div class="btn-group">
+								<button id="showFlowsButton" style="display:none" type="button" class="btn btn-sm btn-success"><i class="fa fa-check-square"></i><span>&nbsp;&nbsp;Continue</span></button>
+							</div>
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-primary pull-right resetButton"><i class="fa fa-undo"></i><span>&nbsp;&nbsp;Start Over</button>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="tab-pane" id="flows">
+						</br>
+						<div class="panel panel-default">
+							<div class="panel-heading">Summary</div>
+							<div id="summaryInfo" style="margin:4px;"></div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">Estimated Flows</div>
+							<div id="flexibletables" class ="col-md-12">
+							<table class ="respond space"> <!-- table table-striped table-condensed -->
+							
+								<thead>
+								<tr>
+									<!--<tr><th>Recurrence Interval (yrs)</th><th>StreamStats Discharge (cfs)</th><th>Predicted Future Discharge (cfs) [Mean]</th><th>Predicted Future Discharge (cfs) [Median]</th><th>Predicted Future Discharge (cfs) [Max]</th><th>Predicted Future Discharge (cfs) [Min]</th><th>Predicted Future Discharge (% change) [Mean]</th><th>Predicted Future Discharge (% change) [Median]</th><th>Predicted Future Discharge (% change) [Max]</th><th>Predicted Future Discharge (% change) [Min]</th></tr> -->
+										<th>Recurrence Interval (yrs)</th>
+										<th>StreamStats Discharge (cfs)</th>
+										<th>Predicted Future Discharge (cfs) [Mean]</th>
+										<th>Predicted Future Discharge (cfs) [Median]</th>
+										<th>Predicted Future Discharge (cfs) [Max]</th>
+										<th>Predicted Future Discharge (cfs) [Min]</th>
+										<th>Predicted Future Discharge (% change) [Mean]</th>
+										<th>Predicted Future Discharge (% change) [Median]</th>
+										<th>Predicted Future Discharge (% change) [Max]</th>
+										<th>Predicted Future Discharge (% change) [Min]</th>
+								</tr>
+								</thead>
+								<tbody id="flowTable">
+								<tr>
+									<td class ="rt-cell-1" >1</td>
+									<td class ="rt-cell-2">2</td>
+									<td class ="rt-cell-3">3</td>
+									<td class ="rt-cell-4">4</td>
+									<td class ="rt-cell-5">5</td>
+									<td class ="rt-cell-6">6</td>
+									<td class ="rt-cell-7">7</td>
+									<td class ="rt-cell-8">8</td>
+									<td class ="rt-cell-9">9</td>
+									<td class ="rt-cell-10">10</td>
+								</tr>
+								</tbody>
+							</table>
+							<!-- scripts for responsive table -->
+							<script src="assets/js/jquery.responsive-tables.js"></script>
+							<script src="assets/js/jquery.responsive-tables.min.js"></script>
+							<script src="assets/js/app.js"></script>
+							</div>
+						</div>
+
+						<div class="clearfix">
+							<button id="exportToCSV" style="display:none" type="button" class="btn btn-sm btn-success"><span><i class="fa fa-download"></i></span>&nbsp;&nbsp;Export to CSV</button>
+							<button type="button" class="btn btn-sm btn-primary pull-right resetButton"><i class="fa fa-undo"></i><span>&nbsp;&nbsp;Start Over</button>
+						</div>
+					</div>
+
+					<div class="tab-pane" id="maptab">
+						</br>
+						<div style="height: 420x;" class="panel panel-default">
+							<div class="panel-heading">Map</div>
+							<div style="height: 400px;" id="modalMap"></div>
+						</div>
+
+						<div class="clearfix">
+							<a id="exportButton" style="display:none" class="btn btn-sm btn-success pull left" type="button"><span><i class="fa fa-download"></i></span>&nbsp;&nbsp;Export Basin</a>
+							<button type="button" class="btn btn-sm btn-primary pull-right resetButton"><i class="fa fa-undo"></i><span>&nbsp;&nbsp;Start Over</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.5/esri-leaflet.js"></script>
+	<script src="assets/js/bootstrap-growl.min.js"></script>
+    <script src="assets/js/main.js"></script>
+	<script src="assets/js/data.js"></script>
+
+  </body>
+</html>
